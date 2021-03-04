@@ -18,34 +18,28 @@ package com.example.androiddevchallenge
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
+import com.example.androiddevchallenge.data.puppyData
 import com.example.androiddevchallenge.models.Puppy
 import com.example.androiddevchallenge.ui.theme.MyTheme
 import com.example.androiddevchallenge.ui.theme.PuppyListItem
 
 class MainActivity : AppCompatActivity() {
-    val puppies: MutableList<Puppy> = mutableListOf<Puppy>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             MyTheme {
-                MyApp(puppies)
+                MyApp(puppyData)
             }
         }
-        puppies.add(Puppy("Jimmy","Rottweiler",2,"Empty"))
-        puppies.add(Puppy("Johny","Rottweiler",2,"Empty"))
     }
 }
 
@@ -54,12 +48,10 @@ class MainActivity : AppCompatActivity() {
 fun MyApp(puppies: List<Puppy>) {
     Surface(color = MaterialTheme.colors.background) {
         LazyColumn(Modifier.fillMaxWidth()) {
-//            puppies.forEach{ puppy ->
-//                PuppyListItem(puppy = puppy)
-//            }
-            items(puppies){ item: Puppy ->
-                PuppyListItem(puppy = item)
-                Divider(color = Color.White)
+
+            itemsIndexed(puppies){ index,item: Puppy, ->
+                PuppyListItem(puppy = item,index)
+                Divider()
             }
         }
         //Text(text = "Ready... Set... GO!")
